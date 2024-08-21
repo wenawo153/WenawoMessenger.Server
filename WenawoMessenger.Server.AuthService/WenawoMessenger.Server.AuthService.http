@@ -1,0 +1,6 @@
+@WenawoMessenger.Server.AuthService_HostAddress = http://localhost:5279
+
+GET {{WenawoMessenger.Server.AuthService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{11B257C0-0238-4BB0-A8F8-D9BAD8DA214B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WenawoMessenger.Server.UserService", "WenawoMessenger.Server.UserService\WenawoMessenger.Server.UserService.csproj", "{6A460D53-3C95-44F4-B073-238C6553CA28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WenawoMessenger.Server.AuthenticationService", "WenawoMessenger.Server.AuthService\WenawoMessenger.Server.AuthenticationService.csproj", "{31FB0EF9-7D88-4425-808D-B27F5C7BFAEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WenawoMessenger.Server.WebSocket", "WenawoMessenger.Server.WebSocket\WenawoMessenger.Server.WebSocket.csproj", "{ED3849C8-41DF-45A8-8338-39C935564E47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A460D53-3C95-44F4-B073-238C6553CA28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A460D53-3C95-44F4-B073-238C6553CA28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A460D53-3C95-44F4-B073-238C6553CA28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A460D53-3C95-44F4-B073-238C6553CA28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31FB0EF9-7D88-4425-808D-B27F5C7BFAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31FB0EF9-7D88-4425-808D-B27F5C7BFAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31FB0EF9-7D88-4425-808D-B27F5C7BFAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31FB0EF9-7D88-4425-808D-B27F5C7BFAEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3849C8-41DF-45A8-8338-39C935564E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3849C8-41DF-45A8-8338-39C935564E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3849C8-41DF-45A8-8338-39C935564E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3849C8-41DF-45A8-8338-39C935564E47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A460D53-3C95-44F4-B073-238C6553CA28} = {11B257C0-0238-4BB0-A8F8-D9BAD8DA214B}
+		{31FB0EF9-7D88-4425-808D-B27F5C7BFAEF} = {11B257C0-0238-4BB0-A8F8-D9BAD8DA214B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFE60F52-1A12-4E32-A4DE-BAD3DB85922F}
+	EndGlobalSection
+EndGlobal
