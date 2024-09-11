@@ -5,7 +5,7 @@ namespace WenawoMessenger.Server.UserService.DBService
 {
     public class ApplicationDBContext : DbContext
     {
-        DbSet<DBUser> Users { get; set; }
+        public DbSet<DBUser> Users { get; set; }
 
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) 
         {

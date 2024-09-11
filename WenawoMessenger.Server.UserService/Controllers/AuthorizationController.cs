@@ -1,27 +1,36 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MessengerClassLibraly.User;
 using Microsoft.AspNetCore.Mvc;
-using WenawoMessenger.Server.UserService.Models;
 using WenawoMessenger.Server.UserService.Services.AuthorizationService;
 
 namespace WenawoMessenger.Server.UserService.Controllers
 {
-    [ApiController]
-    [Route("/[controller]")]
-    public class AuthorizationController(IAuthorizationService authorizationService) : Controller
-    {
-        IAuthorizationService _authorizationService = authorizationService;
+	[ApiController]
+	[Route("/[controller]")]
+	public class AuthorizationController(IAuthorizationService authorizationService) : Controller
+	{
+		IAuthorizationService _authorizationService = authorizationService;
 
-        [HttpPost ("Registration")]
-        public ActionResult Registration([FromQuery] string name, [FromQuery] string password)
-        {
-            User user = _authorizationService.Registration(name, password);
+		[HttpPost ("Registration")]
+		public async Task<IActionResult> Registration([FromBody] UserRegModel userRegModel)
+		{
+			try
+			{
+				UserLogResponce userLogResponce = await _authorizationService.RegistrationAsync(userRegModel);
+				return Ok(userLogResponce);
+			}
+			catch (Exception) { throw new Exception("Registration service error"); };
 
-            return Ok(user);
-        }
+		}
 
-        //public ActionResult Login(int id)
-        //{
-        //    return View();
-        //}
-    }
+		[HttpGet ("Login")]
+		public async Task<IActionResult> Login([FromBody] UserLogModel userLogModel)
+		{
+			try
+			{
+				UserLogResponce userLogResponce = await _authorizationService.LoginAsync(userLogModel);
+				return Ok(userLogResponce);
+			}
+			catch (Exception) { throw new Exception("Login Service error"); };
+		}
+	}
 }

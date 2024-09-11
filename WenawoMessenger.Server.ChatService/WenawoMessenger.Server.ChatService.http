@@ -1,0 +1,6 @@
+@WenawoMessenger.Server.ChatService_HostAddress = http://localhost:5291
+
+GET {{WenawoMessenger.Server.ChatService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

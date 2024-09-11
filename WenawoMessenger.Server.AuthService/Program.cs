@@ -1,15 +1,40 @@
+using Microsoft.EntityFrameworkCore;
+using WenawoMessenger.Server.AuthenticationService.DBService;
+using WenawoMessenger.Server.AuthenticationService.Models;
+using WenawoMessenger.Server.AuthenticationService.Services.CreateTokenService;
+using WenawoMessenger.Server.AuthenticationService.Services.RefreshTokenService;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region DB
+
+var UserKeysDBSettings = builder.Configuration.GetSection("ConnectionStrings").GetSection("UserKeys").Value;
+
+builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(UserKeysDBSettings));
+
+#endregion
+
+#region Services
+
+builder.Services.AddScoped<ICreateTokenService, CreateTokenService>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
+#endregion
+
+#region Configuration
+
+builder.Services.Configure<SecurityOptions>(builder.Configuration.GetSection("SecurityOptions"));
+
+#endregion
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
