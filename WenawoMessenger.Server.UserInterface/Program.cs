@@ -4,6 +4,7 @@ using MessengerHttpServiceLibraly.HttpServices.AuthenticationService;
 using MessengerHttpServiceLibraly.HttpServices.ChatService;
 using MessengerHttpServiceLibraly.HttpServices.UserService.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WenawoMessenger.Server.UserInterface.Hubs.UserHub;
@@ -69,7 +70,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 app.MapHub<AuthHub>("/auth");
 

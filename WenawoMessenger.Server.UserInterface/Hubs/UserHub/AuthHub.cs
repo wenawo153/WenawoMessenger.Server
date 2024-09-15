@@ -18,11 +18,6 @@ namespace WenawoMessenger.Server.UserInterface.Hubs.UserHub
 		private readonly MessengerHttpServiceLibraly.HttpServices.UserService.Authorization.IAuthorizationService
 			_authorizationService = authorizationService;
 
-		public async Task Send(string mes)
-		{
-			await Clients.All.SendAsync("Send", mes);
-		}
-
 		public async Task Join(UserLogModel userLog)
 		{
 			var userLogResponce = await _authorizationService.LoginAsync(userLog)
@@ -57,6 +52,5 @@ namespace WenawoMessenger.Server.UserInterface.Hubs.UserHub
 
 			await Clients.Caller.SendAsync("RefreshToken", newToken);
 		}
-
 	}
 }

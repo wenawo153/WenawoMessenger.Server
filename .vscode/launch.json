@@ -1,0 +1,40 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: WenawoMessenger.Server.WebSocket Release",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/WenawoMessenger.Server.UserInterface/WenawoMessenger.Server.UserInterface.csproj"
+        },
+        {
+            "name": "C#: WenawoMessenger.Server.ChatService Release",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/WenawoMessenger.Server.ChatService/WenawoMessenger.Server.ChatService.csproj"
+        },
+        {
+            "name": "C#: WenawoMessenger.Server.UserService Release",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/WenawoMessenger.Server.UserService/WenawoMessenger.Server.UserService.csproj"
+        },
+        {
+            "name": "C#: WenawoMessenger.Server.AuthService Release",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/WenawoMessenger.Server.AuthService/WenawoMessenger.Server.AuthenticationService.csproj",
+        }
+    ],
+    "compounds": [
+        {
+            "name": "WenawoMessenger.Server",
+            "configurations": ["C#: WenawoMessenger.Server.AuthService Release", "C#: WenawoMessenger.Server.ChatService Release",
+        "C#: WenawoMessenger.Server.UserService Release", "C#: WenawoMessenger.Server.WebSocket Release"],
+        "stopAll": true
+        },
+    ]
+}
