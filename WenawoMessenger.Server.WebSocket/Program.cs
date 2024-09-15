@@ -1,8 +1,12 @@
 
+using MessengerHttpServiceLibraly;
+using MessengerHttpServiceLibraly.HttpServices.AuthenticationService;
+using MessengerHttpServiceLibraly.HttpServices.ChatService;
+using MessengerHttpServiceLibraly.HttpServices.UserService.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WenawoMessenger.Server.WebSocket.Services.UserService.HttpClient.UserClient.Authorization;
+using WenawoMessenger.Server.UserInterface.Hubs.UserHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +19,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
 
-#region HttpServices
+#region MicroServices
 
-builder.Services.AddScoped<IAuthorizationClient, AuthorizationClient>();
+var httpConfig = builder.Configuration.GetSection("MicroServicesUrl").Get<HttpConfig>() 
+    ?? throw new Exception("No microservices url's");
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>(_ => new AuthenticationService(
+	httpConfig));
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>(_ => new AuthorizationService(
+	httpConfig));
+builder.Services.AddScoped<IChatService, ChatService>(_ => new ChatService(
+	httpConfig));
+builder.Services.AddScoped<IMessegeService, MessegeService>(_ => new MessegeService(
+	httpConfig));
 
 #endregion
 
@@ -40,6 +54,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
 
 #endregion
 
+#region Configuration
+
+builder.Services.Configure<HttpConfig>(builder.Configuration.GetSection("MicroServicesUrl"));
+
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,6 +70,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapHub<AuthHub>("/auth");
 
 app.UseAuthorization();
 app.UseAuthentication();

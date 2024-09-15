@@ -10,7 +10,7 @@ namespace WenawoMessenger.Server.AuthenticationService.DBService
 
 		public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
 		{
-			Database.EnsureCreatedAsync();
+			Database.EnsureCreated();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

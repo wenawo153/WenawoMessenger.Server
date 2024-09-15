@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MessengerClassLibraly\MessengerClassLibraly.csproj" />
+    <ProjectReference Include="..\MessengerHttpServiceLibraly\MessengerHttpServiceLibraly.csproj" />
   </ItemGroup>
 
 </Project>

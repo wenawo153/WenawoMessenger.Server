@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace MessengerClassLibraly.Messege
 {
-	public class MessegeSendData
+	public class MessegeEditData
 	{
-		public string SenderId { get; set; } = null!;
-		public int ChatId { get; set; }
+		public long Id { get; set; }
 		public string Content { get; set; } = null!;
 	}
 }

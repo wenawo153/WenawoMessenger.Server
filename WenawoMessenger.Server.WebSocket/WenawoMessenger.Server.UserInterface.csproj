@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -16,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\UserService\Models\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MessengerClassLibraly\MessengerClassLibraly.csproj" />
+    <ProjectReference Include="..\MessengerHttpServiceLibraly\MessengerHttpServiceLibraly.csproj" />
   </ItemGroup>
 
 </Project>

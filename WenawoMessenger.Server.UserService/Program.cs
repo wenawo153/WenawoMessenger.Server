@@ -1,10 +1,7 @@
-using MessengerClassLibraly.User;
+using MessengerHttpServiceLibraly;
+using MessengerHttpServiceLibraly.HttpServices.AuthenticationService;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 using WenawoMessenger.Server.UserService.DBService;
-using WenawoMessenger.Server.UserService.HttpServices;
-using WenawoMessenger.Server.UserService.HttpServices.Services.AuthService;
 using WenawoMessenger.Server.UserService.Models;
 using WenawoMessenger.Server.UserService.Services.AuthorizationService;
 
@@ -26,7 +23,8 @@ builder.Services.AddScoped<HashPasswordService>();
 
 #region MicroServices
 
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>(_ => new AuthenticationService(
+	builder.Configuration.GetSection("MicroServicesUrl").Get<HttpConfig>()!));
 
 #endregion
 
@@ -36,12 +34,6 @@ var mongoDBSettings = builder.Configuration.GetSection("MongoDBSettings").Get<Mo
 
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseMongoDB(
     mongoDBSettings?.AtlasURI ?? "", mongoDBSettings?.DatabaseName ?? ""));
-
-#endregion
-
-#region Configuration
-
-builder.Services.Configure<HttpConfig>(builder.Configuration.GetSection("MicroServicesUrl"));
 
 #endregion
 

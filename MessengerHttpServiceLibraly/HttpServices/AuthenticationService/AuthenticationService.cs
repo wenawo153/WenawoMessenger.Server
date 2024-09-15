@@ -1,19 +1,17 @@
 ﻿using Flurl;
 using Flurl.Http;
-using Microsoft.Extensions.Options;
-using System.Reflection.Metadata;
-using WenawoMessenger.Server.AuthenticationService.Models;
 
-namespace WenawoMessenger.Server.UserService.HttpServices.Services.AuthService
+namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 {
-	public class AuthService(IOptions<HttpConfig> options) : IAuthService
+	public class AuthenticationService(HttpConfig HttpConfig) : IAuthenticationService
 	{
-		private readonly string authLink = options.Value.AuthenticationLink;
+		private readonly string link = HttpConfig.AuthenticationLink;
+
 		public async Task<string> CreateTokenAsync(string userId)
 		{
 			try
 			{
-				var url = new Url($"{authLink}/authentication/CreateToken").SetQueryParam("userId", userId);
+				var url = new Url($"{link}/authentication/CreateToken").SetQueryParam("userId", userId);
 
 				var result = await url.GetStringAsync();
 				if (result != null) return result;
@@ -26,7 +24,7 @@ namespace WenawoMessenger.Server.UserService.HttpServices.Services.AuthService
 		{
 			try
 			{
-				var url = new Url($"{authLink}/refreshtoken/RefreshToken").SetQueryParam("userId", userId);
+				var url = new Uri($"{link}/refreshtoken/RefreshToken").SetQueryParam("userId", userId);
 
 				var result = await url.GetStringAsync();
 				if (result != null) return result;
@@ -36,3 +34,4 @@ namespace WenawoMessenger.Server.UserService.HttpServices.Services.AuthService
 		}
 	}
 }
+

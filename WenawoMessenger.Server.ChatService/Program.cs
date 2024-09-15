@@ -21,7 +21,7 @@ builder.Services.AddScoped<IMessegeService, MessegeService>();
 
 #region DB
 
-var UserKeysDBSettings = builder.Configuration.GetSection("ConnectionStrings").Value;
+var UserKeysDBSettings = builder.Configuration.GetSection("ConnectionStrings").GetSection("Chats").Value;
 
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(UserKeysDBSettings));
 

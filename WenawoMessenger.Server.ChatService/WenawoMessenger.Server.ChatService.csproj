@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="HttpServices\" />
     <Folder Include="Models\" />
     <Folder Include="Services\ChatService\Models\" />

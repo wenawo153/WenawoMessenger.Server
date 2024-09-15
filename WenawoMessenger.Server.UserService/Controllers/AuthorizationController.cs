@@ -8,7 +8,7 @@ namespace WenawoMessenger.Server.UserService.Controllers
 	[Route("/[controller]")]
 	public class AuthorizationController(IAuthorizationService authorizationService) : Controller
 	{
-		IAuthorizationService _authorizationService = authorizationService;
+		private readonly IAuthorizationService _authorizationService = authorizationService;
 
 		[HttpPost ("Registration")]
 		public async Task<IActionResult> Registration([FromBody] UserRegModel userRegModel)
@@ -23,7 +23,7 @@ namespace WenawoMessenger.Server.UserService.Controllers
 		}
 
 		[HttpGet ("Login")]
-		public async Task<IActionResult> Login([FromBody] UserLogModel userLogModel)
+		public async Task<IActionResult> Login([FromQuery] UserLogModel userLogModel)
 		{
 			try
 			{

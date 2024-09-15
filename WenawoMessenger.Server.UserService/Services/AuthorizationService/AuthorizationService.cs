@@ -1,18 +1,19 @@
 ﻿using MessengerClassLibraly.User;
+using MessengerHttpServiceLibraly;
+using MessengerHttpServiceLibraly.HttpServices.AuthenticationService;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson.Serialization;
+using Microsoft.Extensions.Options;
 using WenawoMessenger.Server.UserService.DBService;
 using WenawoMessenger.Server.UserService.DBService.Models;
-using WenawoMessenger.Server.UserService.HttpServices.Services.AuthService;
 
 namespace WenawoMessenger.Server.UserService.Services.AuthorizationService
 {
 	public class AuthorizationService(ApplicationDBContext applicationDBContext, 
-		HashPasswordService hashPasswordService, IAuthService authService) : IAuthorizationService
+		HashPasswordService hashPasswordService, IAuthenticationService authenticationService) : IAuthorizationService
 	{
 		private readonly ApplicationDBContext _applicationDBContext = applicationDBContext;
 		private readonly HashPasswordService _hashPasswordService = hashPasswordService;
-		private readonly IAuthService _authService = authService;
+		private readonly IAuthenticationService _authenticationService = authenticationService;
 
 		public async Task<UserLogResponce> LoginAsync(UserLogModel userLogData)
 		{
@@ -24,7 +25,7 @@ namespace WenawoMessenger.Server.UserService.Services.AuthorizationService
 				if (_hashPasswordService.VerifyPassword(userDataDB.Password, userLogData.Password))
 				{
 					var userData = userDataDB.ConvertToUserFullDataAndId();
-					var userToken = await _authService.CreateTokenAsync(userData.UserId);
+					var userToken = await _authenticationService.CreateTokenAsync(userData.UserId);
 					var userLogResponce = UserLogResponce.ConvertUserLogResponce(userToken, userData);
 
 					return userLogResponce;
@@ -52,7 +53,7 @@ namespace WenawoMessenger.Server.UserService.Services.AuthorizationService
 				await _applicationDBContext.Users.AddAsync(newUser);
 				await _applicationDBContext.SaveChangesAsync();
 
-				var userToken = await _authService.CreateTokenAsync(newUser.Id.ToString());
+				var userToken = await _authenticationService.CreateTokenAsync(newUser.Id.ToString());
 
 				return UserLogResponce.ConvertUserLogResponce(userToken, newUser.ConvertToUserFullDataAndId());
 			}
