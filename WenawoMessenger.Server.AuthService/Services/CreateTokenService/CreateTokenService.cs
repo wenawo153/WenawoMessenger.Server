@@ -15,7 +15,7 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.CreateTokenServi
 		private readonly ApplicationDBContext _applicationDBContext = applicationDBContext;
 		private readonly SecurityOptions _options = options.Value;
 
-		public async Task<string> CreateTokenAsync(string userId)
+		public async Task<UserJwtToken> CreateTokenAsync(string userId)
 		{
 			UserTokenDB? testUserDB = _applicationDBContext.UserKeys.FirstOrDefault((e) => e.UserId == userId);
 			if (testUserDB != null)
@@ -41,21 +41,7 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.CreateTokenServi
 					);
 				var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-				var refreshToken = new RefreshToken()
-				{
-					UserId = userId,
-					RefreshTokenCreated = now,
-					RefreshTokenExpiration = now.Add(TimeSpan.FromDays(_options.ExpiresDaysRefresh))
-				};
-
-				//var refreshToken = new JwtSecurityToken(
-				//	issuer: _options.Issuer,
-				//	audience: _options.Audience,
-				//	notBefore: now,
-				//	claims: claimsIdentity,
-				//	expires: now.Add(TimeSpan.FromDays(_options.ExpiresDaysRefresh)),
-				//	signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
-				//var encodedRefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshToken);
+				var refreshToken = new RefreshToken(userId, now, now.Add(TimeSpan.FromDays(_options.ExpiresDaysRefresh)));
 
 				var userKeys = new UserToken()
 				{
@@ -69,7 +55,14 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.CreateTokenServi
 				await _applicationDBContext.AddAsync(userKeysDb);
 				await _applicationDBContext.SaveChangesAsync();
 
-				return encodedJwt;
+				var userJwtToken = new UserJwtToken()
+				{
+					UserId = userId,
+					AccessToken = encodedJwt,
+					RefreshToken =  userKeys.RefreshToken.Token
+				};
+
+				return userJwtToken;
 			}
 			catch (ArgumentException)
 			{

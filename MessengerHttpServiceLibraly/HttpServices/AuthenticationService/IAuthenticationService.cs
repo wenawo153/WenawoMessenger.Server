@@ -1,8 +1,10 @@
-﻿namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
+﻿using WenawoMessenger.Server.AuthenticationService.Models;
+
+namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 {
 	public interface IAuthenticationService
 	{
-		Task<string> CreateTokenAsync(string userId);
-		Task<string> RefreshTokenAsync(string userId);
+		Task<UserJwtToken> CreateTokenAsync(string userId);
+		Task<UserJwtToken> RefreshTokenAsync(string userId, string refreshToken);
 	}
 }

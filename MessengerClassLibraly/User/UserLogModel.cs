@@ -10,5 +10,13 @@ namespace MessengerClassLibraly.User
 	{
 		public string Email { get; set; } = null!;
 		public string Password { get; set; } = null!;
+
+		public UserLogModel() { }
+
+		public UserLogModel(string email, string password) 
+		{
+			Email = email;
+			Password = password;
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using WenawoMessenger.Server.UserService.Models;
+﻿using WenawoMessenger.Server.AuthenticationService.Models;
+using WenawoMessenger.Server.UserService.Models;
 
 namespace MessengerClassLibraly.User
 {
@@ -6,6 +7,7 @@ namespace MessengerClassLibraly.User
 	{
 		public string UserId { get; set; } = null!;
 		public string JwtToken { get; set; } = null!;
+		public string RefreshToken { get; set; } = null!;
 		public string Email { get; set; } = null!;
 		public string Login { get; set; } = null!;
 		public string Phone { get; set; } = "No number";
@@ -18,7 +20,7 @@ namespace MessengerClassLibraly.User
 		public List<string> UserChats { get; set; } = [];
 
 
-		public static UserLogResponce ConvertUserLogResponce(string userId, string jwtToken, UserFullData userFullData)  
+		public static UserLogResponce ConvertUserLogResponce(string userId, UserJwtToken jwtToken, UserFullData userFullData)  
 		{
 			return new()
 			{
@@ -26,7 +28,8 @@ namespace MessengerClassLibraly.User
 				DateOfRegistration = userFullData.DateOfRegistration,
 				Description = userFullData.Description,
 				Email = userFullData.Email,
-				JwtToken = jwtToken,
+				JwtToken = jwtToken.AccessToken,
+				RefreshToken = jwtToken.RefreshToken,
 				LastOnline = userFullData.LastOnline,
 				Login = userFullData.Login,
 				Phone = userFullData.Phone,
@@ -37,7 +40,7 @@ namespace MessengerClassLibraly.User
 			};
 		}
 
-		public static UserLogResponce ConvertUserLogResponce(string jwtToken, UserFullDataAndId userFullDataAndId)
+		public static UserLogResponce ConvertUserLogResponce(UserJwtToken jwtToken, UserFullDataAndId userFullDataAndId)
 		{
 			return new()
 			{
@@ -45,7 +48,8 @@ namespace MessengerClassLibraly.User
 				UserGroups = userFullDataAndId.UserGroups,
 				UserFriends = userFullDataAndId.UserFriends,
 				DateOfBirth = userFullDataAndId.DateOfBirth,
-				JwtToken =jwtToken,
+				JwtToken = jwtToken.AccessToken,
+				RefreshToken = jwtToken.RefreshToken,
 				DateOfRegistration = userFullDataAndId.DateOfRegistration,
 				Description=userFullDataAndId.Description,
 				Email = userFullDataAndId.Email,

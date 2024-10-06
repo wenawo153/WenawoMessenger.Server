@@ -1,5 +1,6 @@
 ﻿using Flurl;
 using Flurl.Http;
+using WenawoMessenger.Server.AuthenticationService.Models;
 
 namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 {
@@ -7,26 +8,32 @@ namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 	{
 		private readonly string link = HttpConfig.AuthenticationLink;
 
-		public async Task<string> CreateTokenAsync(string userId)
+		public async Task<UserJwtToken> CreateTokenAsync(string userId)
 		{
 			try
 			{
 				var url = new Url($"{link}/authentication/CreateToken").SetQueryParam("userId", userId);
 
-				var result = await url.GetStringAsync();
+				var result = await url.GetJsonAsync<UserJwtToken>();
 				if (result != null) return result;
 				else throw new Exception("Nullable result");
 			}
 			catch { throw new Exception("Create token failed"); }
 		}
 
-		public async Task<string> RefreshTokenAsync(string userId)
+		public async Task<UserJwtToken> RefreshTokenAsync(string userId, string refreshToken)
 		{
 			try
 			{
-				var url = new Uri($"{link}/refreshtoken/RefreshToken").SetQueryParam("userId", userId);
+				Dictionary<string, string> queryParams = new()
+				{
+					{"userId", userId},
+					{"refreshToken", refreshToken }
+				};
 
-				var result = await url.GetStringAsync();
+				var url = new Url($"{link}/refreshtoken/RefreshToken").SetQueryParams(queryParams);
+
+				var result = await url.GetJsonAsync<UserJwtToken>();
 				if (result != null) return result;
 				else throw new Exception("Nullable result");
 			}

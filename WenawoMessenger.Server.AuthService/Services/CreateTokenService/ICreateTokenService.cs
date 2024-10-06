@@ -4,6 +4,6 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.CreateTokenServi
 {
 	public interface ICreateTokenService
 	{
-		public Task<string> CreateTokenAsync(string userId);
+		public Task<UserJwtToken> CreateTokenAsync(string userId);
 	}
 }

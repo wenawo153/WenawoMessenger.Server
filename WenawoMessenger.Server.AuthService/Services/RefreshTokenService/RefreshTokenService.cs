@@ -14,12 +14,12 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.RefreshTokenServ
 		private readonly ApplicationDBContext _applicationDBContext = applicationDBContext;
 		private readonly SecurityOptions _options = options.Value;
 
-		public async Task<string> RefreshTokenAsync(string userId)
+		public async Task<UserJwtToken> RefreshTokenAsync(string userId, string refreshToken)
 		{
 			UserTokenDB lastUserKeysDB = _applicationDBContext.UserKeys.FirstOrDefault((e) => e.UserId == userId)!;
 			UserToken? lastUserKeys = lastUserKeysDB.ConvertToUserToken();
 			var now = DateTime.UtcNow;
-			if (lastUserKeys != null && lastUserKeys.RefreshToken.RefreshTokenExpiration > now)
+			if (lastUserKeys.RefreshToken.Token == refreshToken && lastUserKeys != null && lastUserKeys.RefreshToken.RefreshTokenExpiration > now)
 			{
 				try
 				{
@@ -38,34 +38,27 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.RefreshTokenServ
 						);
 					var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-					var refreshToken = new RefreshToken()
-					{
-						UserId = userId,
-						RefreshTokenCreated = now,
-						RefreshTokenExpiration = now.Add(TimeSpan.FromDays(_options.ExpiresDaysRefresh))
-					};
-
-					//var refreshToken = new JwtSecurityToken(
-					//	issuer: _options.Issuer,
-					//	audience: _options.Audience,
-					//	notBefore: now,
-					//	claims: claimsIdentity,
-					//	expires: now.Add(TimeSpan.FromDays(_options.ExpiresDaysRefresh)),
-					//	signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
-					//var encodedRefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshToken);
+					var newRefreshToken = new RefreshToken(userId, now, now.Add(TimeSpan.FromDays(_options.ExpiresDaysRefresh)));
 
 					var userKeys = new UserToken()
 					{
 						UserId = userId,
 						AccessToken = encodedJwt,
-						RefreshToken = refreshToken
+						RefreshToken = newRefreshToken
 					};
 
 					_applicationDBContext.UserKeys.Remove(lastUserKeysDB);
 					await _applicationDBContext.UserKeys.AddAsync(userKeys.ConvertToUserTokenDB());
 					await _applicationDBContext.SaveChangesAsync();
 
-					return encodedJwt;
+					var userJwtToken = new UserJwtToken()
+					{
+						UserId = userId,
+						AccessToken = encodedJwt,
+						RefreshToken = newRefreshToken.Token
+					};
+
+					return userJwtToken;
 				}
 				catch (ArgumentException)
 				{

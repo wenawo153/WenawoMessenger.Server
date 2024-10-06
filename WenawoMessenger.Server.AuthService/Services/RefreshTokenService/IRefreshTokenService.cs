@@ -4,6 +4,6 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.RefreshTokenServ
 {
 	public interface IRefreshTokenService
 	{
-		public Task<string> RefreshTokenAsync(string userId);
+		public Task<UserJwtToken> RefreshTokenAsync(string userId, string refreshToken);
 	}
 }

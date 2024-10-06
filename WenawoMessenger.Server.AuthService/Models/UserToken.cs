@@ -15,6 +15,7 @@ namespace WenawoMessenger.Server.AuthenticationService.Models
             return new()
             {
                 AccessToken = AccessToken,
+                RefreshToken = RefreshToken.Token,
                 RefreshTokenCreated = RefreshToken.RefreshTokenCreated,
                 RefreshTokenExpiration = RefreshToken.RefreshTokenExpiration,
                 UserId = UserId

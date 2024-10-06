@@ -8,6 +8,7 @@ namespace WenawoMessenger.Server.AuthenticationService.DBService.Models
 		[Key]
 		public string UserId { get; set; } = null!;
 		public string AccessToken { get; set; } = null!; 
+		public string RefreshToken { get; set; } = null!;
 		public DateTime RefreshTokenCreated { get; set; }
 		public DateTime RefreshTokenExpiration { get; set; }
 
@@ -16,12 +17,7 @@ namespace WenawoMessenger.Server.AuthenticationService.DBService.Models
 			return new()
 			{
 				UserId = UserId,
-				RefreshToken = new()
-				{
-					UserId = UserId,
-					RefreshTokenExpiration = RefreshTokenExpiration,
-					RefreshTokenCreated = RefreshTokenCreated
-				},
+				RefreshToken = new(UserId, RefreshToken, RefreshTokenCreated, RefreshTokenExpiration),
 				AccessToken = AccessToken
 			};
 		}
