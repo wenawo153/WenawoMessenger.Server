@@ -12,7 +12,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 		{
 			try
 			{
-				var url = new Url($"{link}/authentication/CreateToken").SetQueryParam("userId", userId);
+				var url = new Url($"{link}/authentication/createToken").SetQueryParam("userId", userId);
 
 				var result = await url.GetJsonAsync<UserJwtToken>();
 				if (result != null) return result;
@@ -31,7 +31,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 					{"refreshToken", refreshToken }
 				};
 
-				var url = new Url($"{link}/refreshtoken/RefreshToken").SetQueryParams(queryParams);
+				var url = new Url($"{link}/authentication/refreshToken").SetQueryParams(queryParams);
 
 				var result = await url.GetJsonAsync<UserJwtToken>();
 				if (result != null) return result;

@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace WenawoMessenger.Server.UserInterface.Contollers
 {
 	[ApiController]
-	[Route("/[controller]")]
+	[Route("/authorization/")]
 	public class AuthorizationController(IAuthorizationService authorizationService) : Controller
 	{
 		private readonly IAuthorizationService _authorizationService = authorizationService;
 
-		[HttpGet("Login")]
+		[HttpGet("login")]
 		public async Task<IActionResult> LoginAsync([FromQuery]string email,[FromQuery] string password)
 		{
 			try
@@ -24,9 +24,9 @@ namespace WenawoMessenger.Server.UserInterface.Contollers
 			catch (Exception) { throw new Exception(); };
 		}
 
-		[HttpGet("Registration")]
-		public async Task<IActionResult> RegistrationAsync([FromQuery] string email,
-			[FromQuery] string login, [FromQuery] string password, [FromQuery] DateTime dateOfBirth)
+		[HttpPost("registration")]
+		public async Task<IActionResult> RegistrationAsync([FromBody] string email,
+			[FromBody] string login, [FromBody] string password, [FromBody] DateTime dateOfBirth)
 		{
 			try
 			{

@@ -12,7 +12,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Chat/CreateChat");
+				var url = new Url($"{link}/chat/createChat");
 
 				var responce = await url.PostJsonAsync(chatCreateData).ReceiveJson<ChatFullData>();
 
@@ -25,7 +25,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Chat/EditChat");
+				var url = new Url($"{link}/chat/editchat");
 
 				var responce = await url.PutJsonAsync(chatEditData).ReceiveJson<ChatFullData>();
 
@@ -42,7 +42,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 					.Select(e => ("chatId", e))
 					.ToDictionary();
 
-				var url = new Url($"{link}/Chat/GetChats").SetQueryParams(ids);
+				var url = new Url($"{link}/chat/getchats").SetQueryParams(ids);
 
 				var responce = await url.GetJsonAsync<List<ChatFullData>>();
 
@@ -55,7 +55,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Chat/CreateChat").SetQueryParam("chatId", chatId);
+				var url = new Url($"{link}/chat/createChat").SetQueryParam("chatId", chatId);
 
 				var responce = await url.DeleteAsync();
 			}

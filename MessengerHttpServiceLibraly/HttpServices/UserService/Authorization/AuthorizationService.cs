@@ -12,7 +12,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.UserService.Authorization
 		{
 			try
 			{
-				var url = new Url($"{link}/Authorization/Registration");
+				var url = new Url($"{link}/authorization/registration");
 
 				var responce = await url.PostJsonAsync(userRegModel).ReceiveJson<UserLogResponce>();
 
@@ -28,7 +28,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.UserService.Authorization
 		{
 			try
 			{
-				var url = new Url($"{link}/Authorization/Login");
+				var url = new Url($"{link}/authorization/login");
 
 				var responce = await url.PostJsonAsync(userLogModel).ReceiveJson<UserLogResponce>();
 

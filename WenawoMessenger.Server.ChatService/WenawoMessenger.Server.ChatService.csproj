@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="HttpServices\**" />
+    <Compile Remove="Models\**" />
+    <Content Remove="HttpServices\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="HttpServices\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="HttpServices\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Npgsql" Version="8.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -18,8 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="HttpServices\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\ChatService\Models\" />
   </ItemGroup>
 

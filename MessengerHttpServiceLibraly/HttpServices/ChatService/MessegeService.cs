@@ -17,7 +17,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Messege/GetMessegeInRange")
+				var url = new Url($"{link}/messege/getmessegeinrange")
 					.SetQueryParams(new[] { ("ChatId", getMessegeRequest.ChatId),
 						("FirstSearchMessegeId", getMessegeRequest.FirstSearchMessegeId),
 					("GetRange", getMessegeRequest.GetRange)});
@@ -33,7 +33,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Messege/CreateMessege");
+				var url = new Url($"{link}/messege/createMessege");
 
 				var responce = await url.PostJsonAsync(messegeSendData).ReceiveJson<MessegeFullData>();
 
@@ -46,7 +46,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Messege/EditMessege");
+				var url = new Url($"{link}/messege/editmessege");
 
 				var responce = await url.PutJsonAsync(messegeEditData).ReceiveJson<MessegeFullData>();
 
@@ -59,7 +59,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Messege/DeleteMessege").SetQueryParam("messegeId", messegeId);
+				var url = new Url($"{link}/messege/deletemessege").SetQueryParam("messegeId", messegeId);
 
 				var responce = await url.DeleteAsync();
 			}
@@ -73,7 +73,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 				Dictionary<string, long> ids = messegesId
 					.Select(e => ("messegesId", e))
 					.ToDictionary();
-				var url = new Url($"{link}/Messege/DeleteMesseges").SetQueryParams(ids);
+				var url = new Url($"{link}/messege/deletemesseges").SetQueryParams(ids);
 
 				var responce = await url.DeleteAsync();
 			}
@@ -84,7 +84,7 @@ namespace MessengerHttpServiceLibraly.HttpServices.ChatService
 		{
 			try
 			{
-				var url = new Url($"{link}/Messege/DeleteAllChatMesseges").SetQueryParam("chatId", chatId);
+				var url = new Url($"{link}/messege/deleteallchatmesseges").SetQueryParam("chatId", chatId);
 
 				var responce = await url.DeleteAsync();
 			}

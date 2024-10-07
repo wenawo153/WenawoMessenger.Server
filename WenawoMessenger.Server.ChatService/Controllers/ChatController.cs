@@ -6,12 +6,12 @@ using ZstdSharp;
 namespace WenawoMessenger.Server.ChatService.Controllers
 {
 	[ApiController]
-	[Route("/[controller]")]
+	[Route("/chat/")]
 	public class ChatController(IChatService chatService) : Controller
 	{
 		private readonly IChatService _chatService = chatService;
 
-		[HttpGet("GetChats")]
+		[HttpGet("getchats")]
 		public async Task<IActionResult> GetChats([FromQuery] List<int> chatsId)
 		{
 			try
@@ -25,7 +25,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch (Exception) { throw new Exception("Get chats error"); };
 		}
 
-		[HttpPost("CreateChat")]
+		[HttpPost("createchat")]
 		public async Task<IActionResult> CreateChat([FromBody] ChatCreateData chatCreateData)
 		{
 			try
@@ -39,7 +39,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch (Exception) { throw new Exception("Create chat error"); };
 		 }
 
-		[HttpPut("EditChat")]
+		[HttpPut("editchat")]
 		public async Task<IActionResult> EditChat([FromQuery] ChatEditData chatEditData)
 		{
 			try
@@ -53,7 +53,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch (Exception) { throw new Exception("Edit chat error"); };
 		}
 
-		[HttpDelete("DeleteChat")]
+		[HttpDelete("deletechat")]
 		public async Task<IActionResult> DeleteChat(int chatId)
 		{
 			try

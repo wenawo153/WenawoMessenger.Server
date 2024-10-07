@@ -6,12 +6,12 @@ using WenawoMessenger.Server.AuthenticationService.Services.CreateTokenService;
 namespace WenawoMessenger.Server.AuthenticationService.Controllers
 {
 	[ApiController]
-	[Route("/authentication/[controller]")]
+	[Route("/authentication/")]
 	public class CreateTokenController(ICreateTokenService createTokenService) : Controller
 	{
 		private readonly ICreateTokenService _createTokenService = createTokenService;
 
-		[HttpGet]
+		[HttpGet("createtoken")]
 		public async Task<IActionResult> CreateToken([Required] string userId)
 		{
 			try

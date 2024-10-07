@@ -5,12 +5,12 @@ using WenawoMessenger.Server.ChatService.Services.MessageServices;
 namespace WenawoMessenger.Server.ChatService.Controllers
 {
 	[ApiController]
-	[Route("/[controller]")]
+	[Route("/messege/")]
 	public class MessegeController(IMessegeService messegeService) : Controller
 	{
 		private readonly IMessegeService _messegeService = messegeService;
 
-		[HttpGet("GetMessegeInRange")]
+		[HttpGet("getmessegeinrange")]
 		public async Task<IActionResult> GetMessegeInRange([FromQuery] GetMessegeRequest getMessegeRequest)
 		{
 			try
@@ -24,7 +24,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch (Exception) { throw new Exception("Get messege error"); };
 		}
 
-		[HttpPost("CreateMessege")]
+		[HttpPost("createmessege")]
 		public async Task<IActionResult> CreateMessege([FromBody] MessegeSendData messegeSendData)
 		{
 			try
@@ -38,7 +38,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch (Exception) { throw new Exception("Create messege error"); }
 		}
 
-		[HttpPut("EditMessege")]
+		[HttpPut("editmessege")]
 		public async Task<IActionResult> EditMessege([FromBody] MessegeEditData messegeEditData)
 		{
 			try
@@ -52,7 +52,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch (Exception) { throw new Exception("Edit messege error"); }
 		}
 
-		[HttpDelete("DeleteMessege")]
+		[HttpDelete("deletemessege")]
 		public async Task<IActionResult> DeleteMessege([FromQuery] long messegeId)
 		{
 			try
@@ -64,7 +64,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch { throw new Exception("Delete messege error"); };
 		}
 		
-		[HttpDelete("DeleteMesseges")]
+		[HttpDelete("deletemesseges")]
 		public async Task<IActionResult> DeleteMesseges([FromBody]List<long> messegeIds)
 		{
 			try
@@ -76,7 +76,7 @@ namespace WenawoMessenger.Server.ChatService.Controllers
 			catch { throw new Exception("Delete messeges error"); };
 		}
 		
-		[HttpDelete("DeleteAllChatMesseges")]
+		[HttpDelete("deleteallchatmesseges")]
 		public async Task<IActionResult> DeleteAllChatMesseges([FromQuery]int chatId)
 		{
 			try

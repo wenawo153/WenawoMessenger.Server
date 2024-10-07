@@ -5,12 +5,12 @@ using WenawoMessenger.Server.UserService.Services.AuthorizationService;
 namespace WenawoMessenger.Server.UserService.Controllers
 {
 	[ApiController]
-	[Route("/[controller]")]
+	[Route("/authorization/")]
 	public class AuthorizationController(IAuthorizationService authorizationService) : Controller
 	{
 		private readonly IAuthorizationService _authorizationService = authorizationService;
 
-		[HttpPost ("Registration")]
+		[HttpPost ("registration")]
 		public async Task<IActionResult> Registration([FromBody] UserRegModel userRegModel)
 		{
 			try
@@ -22,7 +22,7 @@ namespace WenawoMessenger.Server.UserService.Controllers
 
 		}
 
-		[HttpGet ("Login")]
+		[HttpGet ("login")]
 		public async Task<IActionResult> Login([FromQuery] UserLogModel userLogModel)
 		{
 			try

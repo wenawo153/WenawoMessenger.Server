@@ -6,12 +6,12 @@ using WenawoMessenger.Server.AuthenticationService.Services.RefreshTokenService;
 namespace WenawoMessenger.Server.AuthenticationService.Controllers
 {
 	[ApiController]
-	[Route("/refreshtoken/[controller]")]
+	[Route("/authentication/")]
 	public class RefreshTokenController(IRefreshTokenService refreshTokenService) : Controller
 	{
 		private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
 
-		[HttpPost]
+		[HttpPost("refreshtoken")]
 		public async Task<IActionResult> RefreshToken([Required] string userId, [Required] string refreshToken)
 		{
 			try
