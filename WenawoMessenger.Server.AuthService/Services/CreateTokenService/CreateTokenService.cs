@@ -26,7 +26,7 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.CreateTokenServi
 			try
 			{
 				var claimsIdentity = new List<Claim>{
-				 	 new Claim("UserId", userId),
+				 	 new Claim("userId", userId),
 				};
 
 				var now = DateTime.UtcNow;

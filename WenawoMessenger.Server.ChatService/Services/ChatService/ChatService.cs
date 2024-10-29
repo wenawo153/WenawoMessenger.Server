@@ -1,10 +1,8 @@
 ﻿using MessengerClassLibraly.Chat;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using WenawoMessenger.Server.ChatService.DBService;
 using WenawoMessenger.Server.ChatService.DBService.Models;
 using WenawoMessenger.Server.ChatService.Services.MessageServices;
-using WenawoMessenger.Server.UserService.Models;
 
 namespace WenawoMessenger.Server.ChatService.Services.ChatService
 {

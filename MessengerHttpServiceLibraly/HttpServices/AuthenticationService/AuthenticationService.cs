@@ -31,9 +31,9 @@ namespace MessengerHttpServiceLibraly.HttpServices.AuthenticationService
 					{"refreshToken", refreshToken }
 				};
 
-				var url = new Url($"{link}/authentication/refreshToken").SetQueryParams(queryParams);
+				var url = new Url($"{link}/authentication/refreshtoken").SetQueryParams(queryParams);
 
-				var result = await url.GetJsonAsync<UserJwtToken>();
+				var result = await url.PostAsync().ReceiveJson<UserJwtToken>();
 				if (result != null) return result;
 				else throw new Exception("Nullable result");
 			}

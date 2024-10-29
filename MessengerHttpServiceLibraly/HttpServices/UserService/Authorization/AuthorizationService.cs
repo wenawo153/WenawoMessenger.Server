@@ -28,9 +28,15 @@ namespace MessengerHttpServiceLibraly.HttpServices.UserService.Authorization
 		{
 			try
 			{
-				var url = new Url($"{link}/authorization/login");
+				var queryParams = new Dictionary<string, string>
+				{
+					{"email", userLogModel.Email},
+					{"password", userLogModel.Password }
+				};
 
-				var responce = await url.PostJsonAsync(userLogModel).ReceiveJson<UserLogResponce>();
+				var url = new Url($"{link}/authorization/login").SetQueryParams(queryParams);
+
+				var responce = await url.GetJsonAsync<UserLogResponce>();
 
 				return responce;
 			}

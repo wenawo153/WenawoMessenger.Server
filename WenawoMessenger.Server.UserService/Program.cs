@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WenawoMessenger.Server.UserService.DBService;
 using WenawoMessenger.Server.UserService.Models;
 using WenawoMessenger.Server.UserService.Services.AuthorizationService;
+using WenawoMessenger.Server.UserService.Services.UserDataService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<HashPasswordService>();
+builder.Services.AddScoped<IUserDataService, UserDataService>();
 
 #endregion
 

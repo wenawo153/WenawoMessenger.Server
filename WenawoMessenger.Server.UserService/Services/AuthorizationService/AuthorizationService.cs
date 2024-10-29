@@ -1,8 +1,6 @@
 ﻿using MessengerClassLibraly.User;
-using MessengerHttpServiceLibraly;
 using MessengerHttpServiceLibraly.HttpServices.AuthenticationService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using WenawoMessenger.Server.UserService.DBService;
 using WenawoMessenger.Server.UserService.DBService.Models;
 

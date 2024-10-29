@@ -24,7 +24,7 @@ namespace WenawoMessenger.Server.AuthenticationService.Services.RefreshTokenServ
 				try
 				{
 					var claimsIdentity = new List<Claim>{
-				 	 new ("UserId", userId),
+				 	 new ("userId", userId),
 				};
 
 					var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.JwtSecureKey));

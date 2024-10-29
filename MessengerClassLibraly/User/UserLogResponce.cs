@@ -1,5 +1,4 @@
 ﻿using WenawoMessenger.Server.AuthenticationService.Models;
-using WenawoMessenger.Server.UserService.Models;
 
 namespace MessengerClassLibraly.User
 {

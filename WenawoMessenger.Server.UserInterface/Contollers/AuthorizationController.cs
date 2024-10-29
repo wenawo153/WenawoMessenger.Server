@@ -25,13 +25,10 @@ namespace WenawoMessenger.Server.UserInterface.Contollers
 		}
 
 		[HttpPost("registration")]
-		public async Task<IActionResult> RegistrationAsync([FromBody] string email,
-			[FromBody] string login, [FromBody] string password, [FromBody] DateTime dateOfBirth)
+		public async Task<IActionResult> RegistrationAsync([FromBody] UserRegModel regModel)
 		{
 			try
 			{
-				UserRegModel regModel = new UserRegModel(email, login, password, dateOfBirth);
-
 				UserLogResponce responce = await _authorizationService.RegistrationAsync(regModel);
 
 				return Ok(responce);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WenawoMessenger.Server.UserInterface.Hubs.ChatsHub;
 using WenawoMessenger.Server.UserInterface.Hubs.UserHub;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +23,8 @@ builder.Services.AddSignalR();
 
 #region MicroServices
 
-var httpConfig = builder.Configuration.GetSection("MicroServicesUrl").Get<HttpConfig>() 
-    ?? throw new Exception("No microservices url's");
+var httpConfig = builder.Configuration.GetSection("MicroServicesUrl").Get<HttpConfig>()
+	?? throw new Exception("No microservices url's");
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>(_ => new AuthenticationService(
 	httpConfig));
@@ -39,25 +40,38 @@ builder.Services.AddScoped<IMessegeService, MessegeService>(_ => new MessegeServ
 #region Authentification
 
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
-    AddJwtBearer(option =>
-    {
-        option.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidIssuer = "WenawoMessenger.Server",
-            ValidateAudience = true,
-            ValidAudience = "WenawoMessenger.Client",
-            ValidateLifetime = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Heu7WOR5/UFUIADGx+vPp3fz6GtEek5Sz5Fw3j/ykYDuaI5TvI9kXZ0qi80UH9Xl"))
-        };
-    });
+builder.Services.AddAuthentication(options =>
+	{
+		options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+		options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+	})
+	.AddJwtBearer(options =>
+	{
+		options.TokenValidationParameters = new TokenValidationParameters
+		{
+			ValidateIssuer = true,
+			ValidIssuer = "WenawoMessenger.Server",
+			ValidateAudience = true,
+			ValidAudience = "WenawoMessenger.Client",
+			ValidateLifetime = true,
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Heu7WOR5/UFUIADGx+vPp3fz6GtEek5Sz5Fw3j/ykYDuaI5TvI9kXZ0qi80UH9Xl")),
+		};
 
-#endregion
+		options.Events = new JwtBearerEvents
+		{
+			OnMessageReceived = context =>
+			{
+				var accessToken = context.Request.Query["access_token"];
 
-#region Configuration
-
-builder.Services.Configure<HttpConfig>(builder.Configuration.GetSection("MicroServicesUrl"));
+				var path = context.HttpContext.Request.Path;
+				if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+				{
+					context.Token = accessToken;
+				}
+				return Task.CompletedTask;
+			}
+		};
+	});
 
 #endregion
 
@@ -66,21 +80,22 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();
+	app.UseHttpsRedirection();
 }
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+	ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-app.MapHub<AuthHub>("/auth");
+app.MapHub<AuthenteficationHub>("/hubs/authentefication");
+app.MapHub<ChatsHub>("/hubs/chat");
 
 app.UseAuthorization();
 app.UseAuthentication();

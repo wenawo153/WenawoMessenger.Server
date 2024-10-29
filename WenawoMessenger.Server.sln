@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WenawoMessenger.Server.Chat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerHttpServiceLibraly", "MessengerHttpServiceLibraly\MessengerHttpServiceLibraly.csproj", "{6E1645E1-8872-490E-A40D-6386F639E4E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WenawoMessenger.Server.UserInterface", "WenawoMessenger.Server.UserInterface\WenawoMessenger.Server.UserInterface.csproj", "{F178E2E2-3F35-47A3-B821-75535459299B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WenawoMessenger.Server.UserInterface", "WenawoMessenger.Server.UserInterface\WenawoMessenger.Server.UserInterface.csproj", "{F178E2E2-3F35-47A3-B821-75535459299B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

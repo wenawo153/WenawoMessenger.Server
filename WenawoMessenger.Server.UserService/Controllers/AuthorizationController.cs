@@ -18,7 +18,7 @@ namespace WenawoMessenger.Server.UserService.Controllers
 				UserLogResponce userLogResponce = await _authorizationService.RegistrationAsync(userRegModel);
 				return Ok(userLogResponce);
 			}
-			catch (Exception) { throw new Exception("Registration service error"); };
+			catch { throw new Exception("Registration service error"); };
 
 		}
 
@@ -30,7 +30,7 @@ namespace WenawoMessenger.Server.UserService.Controllers
 				UserLogResponce userLogResponce = await _authorizationService.LoginAsync(userLogModel);
 				return Ok(userLogResponce);
 			}
-			catch (Exception) { throw new Exception("Login Service error"); };
+			catch { throw new Exception("Login Service error"); };
 		}
 	}
 }
